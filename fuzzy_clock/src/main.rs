@@ -2,42 +2,42 @@ extern crate chrono;
 use chrono::prelude::*;
 
 fn main() {
-    let dt = Utc::now();
-    let time = (dt.hour(), dt.minute());
-
+    let dt = Local::now();
+    let time = (dt.hour(), dt.minute(), dt.second());
     println!("{}", get_fuzz(time));
 
 
 }
 
 
-fn get_fuzz(time : (u32, u32)) -> String {
+fn get_fuzz(time : (u32, u32, u32)) -> String {
 
-    if time.1 < 3 {
+    let m : f32 = time.1 as f32 + (time.2 as f32 /60.0);
+    if m < 2.5 {
         return format!("{} o'clock", num_to_text(time.0))
-    } else if time.1 < 8 {
+    } else if m  < 7.5 {
         return format!("five past {}", num_to_text(time.0))
-    } else if time.1 < 13 {
+    } else if m < 12.5 {
         return format!("ten past {}", num_to_text(time.0))
-    } else if time.1 < 18 {
+    } else if m  < 17.5 {
         return format!("quater past {}", num_to_text(time.0))
-    } else if time.1 < 23 {
+    } else if m < 22.5 {
         return format!("twenty past {}", num_to_text(time.0))
-    } else if time.1 < 28 {
+    } else if m < 27.5 {
         return format!("twenty-five past {}", num_to_text(time.0))
-    } else if time.1 < 32 {
+    } else if m < 32.5 {
         return format!("half past {}", num_to_text(time.0))
-    } else if time.1 < 38 {
+    } else if m < 37.5 {
         return format!("twenty-five to {}", num_to_text(time.0 + 1))
-    } else if time.1 < 42 {
+    } else if m < 42.5 {
         return format!("twenty to {}", num_to_text(time.0 + 1))
-    } else if time.1 < 48 {
+    } else if m < 47.5 {
         return format!("quarter to {}", num_to_text(time.0 + 1))
-    } else if time.1 < 53 {
+    } else if m < 52.5 {
         return format!("ten to {}", num_to_text(time.0 + 1))
-    } else if time.1 < 58 {
+    } else if m < 57.5 {
         return format!("five to {}", num_to_text(time.0 + 1))
-    } else if time.1 < 60 {
+    } else if m < 60.0 {
         return format!("{} o'clock", num_to_text(time.0 + 1))
     }
     String::from("failure")
