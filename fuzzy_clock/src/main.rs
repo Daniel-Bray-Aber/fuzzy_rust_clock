@@ -7,38 +7,52 @@ fn main() {
     println!("{}", get_fuzz(time));
 }
 
-
 fn get_fuzz(time : (u32, u32)) -> String {
-
-    let m : f32 = time.1 as f32 + 0.5;
-    if m < 2.5 {
-        return format!("{} o'clock", num_to_text(time.0))
-    } else if m  < 7.5 {
-        return format!("five past {}", num_to_text(time.0))
-    } else if m < 12.5 {
-        return format!("ten past {}", num_to_text(time.0))
-    } else if m < 17.5 {
-        return format!("quater past {}", num_to_text(time.0))
-    } else if m < 22.5 {
-        return format!("twenty past {}", num_to_text(time.0))
-    } else if m < 27.5 {
-        return format!("twenty-five past {}", num_to_text(time.0))
-    } else if m < 32.5 {
-        return format!("half past {}", num_to_text(time.0))
-    } else if m < 37.5 {
-        return format!("twenty-five to {}", num_to_text(time.0 + 1))
-    } else if m < 42.5 {
-        return format!("twenty to {}", num_to_text(time.0 + 1))
-    } else if m < 47.5 {
-        return format!("quarter to {}", num_to_text(time.0 + 1))
-    } else if m < 52.5 {
-        return format!("ten to {}", num_to_text(time.0 + 1))
-    } else if m < 57.5 {
-        return format!("five to {}", num_to_text(time.0 + 1))
-    } else if m < 60.0 {
-        return format!("{} o'clock", num_to_text(time.0 + 1))
+    let mut hr = time.0;
+    if time.1 < 33 {
+        if time.1 < 13 {
+            if time.1 < 3 {
+                return format!("{} o'clock", num_to_text(hr))
+            } else if time.1 < 8 {
+                return format!("five past {}", num_to_text(hr))
+            } else {
+                return format!("ten past {}", num_to_text(hr))
+            }
+        } else {
+            if time.1 < 23 {
+                if time.1 < 18 {
+                    return format!("quater past {}", num_to_text(hr))
+                } else {
+                    return format!("twenty past {}", num_to_text(hr))
+                }
+            } else {
+                if time.1 < 28 {
+                    return format!("twenty-five past {}", num_to_text(hr))
+                } else {
+                    return format!("half past {}", num_to_text(hr))
+                }
+            }
+        }
+    } else {
+        hr += 1;
+        if time.1 < 48 {
+            if time.1 < 38 {
+                return format!("twenty-five to {}", num_to_text(hr))
+            } else if time.1 < 43 {
+                return format!("twenty to {}", num_to_text(hr))
+            } else {
+                return format!("quarter to {}", num_to_text(hr))
+            }
+        } else {
+            if time.1 < 53 {
+                return format!("ten to {}", num_to_text(hr))
+            } else if time.1 < 58 {
+                return format!("five to {}", num_to_text(hr))
+            } else {
+                return format!("{} o'clock", num_to_text(hr))
+            }
+        }
     }
-    String::from("failure")
 }
 
 fn num_to_text(number : u32) -> String {
