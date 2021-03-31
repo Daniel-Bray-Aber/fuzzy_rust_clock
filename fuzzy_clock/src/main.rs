@@ -3,23 +3,21 @@ use chrono::prelude::*;
 
 fn main() {
     let dt = Local::now();
-    let time = (dt.hour(), dt.minute(), dt.second());
+    let time = (dt.hour(), dt.minute());
     println!("{}", get_fuzz(time));
-
-
 }
 
 
-fn get_fuzz(time : (u32, u32, u32)) -> String {
+fn get_fuzz(time : (u32, u32)) -> String {
 
-    let m : f32 = time.1 as f32 + (time.2 as f32 /60.0);
+    let m : f32 = time.1 as f32 + 0.5;
     if m < 2.5 {
         return format!("{} o'clock", num_to_text(time.0))
     } else if m  < 7.5 {
         return format!("five past {}", num_to_text(time.0))
     } else if m < 12.5 {
         return format!("ten past {}", num_to_text(time.0))
-    } else if m  < 17.5 {
+    } else if m < 17.5 {
         return format!("quater past {}", num_to_text(time.0))
     } else if m < 22.5 {
         return format!("twenty past {}", num_to_text(time.0))
